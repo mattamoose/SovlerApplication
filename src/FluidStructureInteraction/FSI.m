@@ -29,15 +29,18 @@ classdef FSI < FLUID & SHAPE
         end
         
         function obj1 = update_effective_velocity(obj)
+            % Returns the updated value of the effective velocity.
             obj1 = obj.Structure_OBJ.shape_velocity - obj.Fluid_OBJ.fluid_velocity;
         end
         
         function obj1 = update_Reynolds_Ext(obj)
+            % Returns the updated value of the external reynolds number.
             obj1 = obj.Fluid_OBJ.fluid_density*obj.Effective_Velocity ...
                 *obj.Structure_OBJ.length_characteristic / obj.Fluid_OBJ.dynamic_viscosity;
         end
 
         function obj1 = update_Force_Bouyant(obj)
+            % Returns the updated value of the Bouyant Force.
             obj1 = obj.Fluid_OBJ.fluid_density*9.8*obj.Structure_OBJ.volume;
         end
 

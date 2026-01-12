@@ -1,6 +1,6 @@
 
+clear all;
 
-addpath()
 clear vars; clc;
 R_b = 0.1889;
 T = 290;
