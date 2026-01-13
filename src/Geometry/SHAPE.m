@@ -16,21 +16,7 @@ classdef SHAPE
 
     methods
         function obj = SHAPE(varargin)
-            if nargin >= 1
-                obj.dimensions = varargin{1};
-            end
-            
-            if nargin >= 2
-                obj.shape_density = varargin{2};
-            end
-
-            if nargin >= 3
-                obj.position = varargin{3};
-            end
-
-            if nargin >= 4
-                obj.shape_velocity = varargin{4};
-            end
+            obj = PropValPair_construction(obj,nargin,varargin{:});
         end
            
         function obj1 = update_mass(obj)
@@ -43,9 +29,11 @@ classdef SHAPE
 
         function obj = update_position(obj,copy,dt)
             if islogical(copy)
-
-                obj.position = obj.position + obj.shape_velocity*dt;
-
+                if copy == true
+                    obj.position = obj.position + obj.shape_velocity*dt;
+                else
+                    obj = obj.position + obj.shape_velocity*dt;
+                end
             else
                 error("Must define COPY:True or False")
             end

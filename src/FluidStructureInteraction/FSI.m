@@ -1,4 +1,4 @@
-classdef FSI < FLUID & SHAPE
+classdef FSI
     properties
         Structure_OBJ;
         Fluid_OBJ;
@@ -17,9 +17,9 @@ classdef FSI < FLUID & SHAPE
             
             %obj@SHAPE(aShape.dimensions, aShape.shape_density, aShape.position, ...
             %   aShape.shape_velocity);
-            obj@FLUID(aFluid.fluid_density,aFluid.dynamic_viscosity,aFluid.fluid_velocity);
             
             obj.Structure_OBJ = aShape; obj.Fluid_OBJ = aFluid;
+            
             obj.Effective_Velocity = obj.Structure_OBJ.shape_velocity ...
                 - obj.Fluid_OBJ.fluid_velocity;
             obj.External_Reynolds = obj.Fluid_OBJ.fluid_density*obj.Effective_Velocity ...

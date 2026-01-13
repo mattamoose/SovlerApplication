@@ -10,26 +10,11 @@ classdef FLUID
 
     methods
         function obj = FLUID(varargin)
+            obj = PropValPair_construction(obj,nargin,varargin{:});
             
-            if nargin >= 1
-                obj.fluid_density = varargin{1};
-            end
-            
-            if nargin >= 2
-                obj.dynamic_viscosity = varargin{2};
-                obj.kinematic_viscosity = obj.dynamic_viscosity / obj.fluid_density;
-            end
-            
-            if nargin >= 3
-                obj.fluid_velocity = varargin{3};
-            end
-
-            if nargin >= 4
-                obj.temperature = varargin{4};
-            end
-
-            
-            
+            if isempty(obj.fluid_velocity)
+                obj.fluid_velocity = 0;
+            end            
         end
     end
 end

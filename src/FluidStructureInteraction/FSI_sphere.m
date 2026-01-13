@@ -1,17 +1,18 @@
-classdef FSI_sphere < FSI & mySPHERE
+classdef FSI_sphere < FSI
     properties
+        sphere
+        fluid
     
-       
-       
-       
+
     end
 
     methods
-        function obj = FSI_sphere(aShape,aFluid)    
+        function obj = FSI_sphere(aSphere,aFluid)    
 
-            obj@FSI(aShape, aFluid);
-            obj@mySPHERE(aShape.diameter, aShape.shape_density, aShape.position, ...
-                aShape.shape_velocity);
+            obj@FSI(aSphere, aFluid);
+            obj.sphere = aSphere; 
+            obj.fluid = aFluid;
+            
            
             obj.Drag_Coefficient = update_Drag_Coefficient(obj).Drag_Coefficient;
             obj.Force_Drag = update_Force_Drag(obj).Force_Drag;
@@ -33,7 +34,7 @@ classdef FSI_sphere < FSI & mySPHERE
             % Returns a copy of the instaniated object with updated Drag
             %      Coefficient value.
             Re = obj.External_Reynolds;
-            if Re < 1 && Re > 0
+            if 0 < Re && Re < 1
                obj.Drag_Coefficient = 24/Re;
             elseif 1 <= Re && Re <= 1000
                obj.Drag_Coefficient = 24/Re*(1 + 0.15*Re^0.687);
@@ -48,15 +49,15 @@ classdef FSI_sphere < FSI & mySPHERE
         function obj = update_Force_Drag(obj)
             % Returns a copy of the instantiated object with an updated Drag
             %   Force value.
-            obj.Force_Drag = obj.Drag_Coefficient * obj.fluid_density ...
-               * obj.Effective_Velocity^2 * obj.planform_area;             
+            obj.Force_Drag = obj.Drag_Coefficient * obj.fluid.fluid_density ...
+               * obj.Effective_Velocity^2 * obj.sphere.planform_area;             
         end
 
         function obj = update_Reynolds(obj,u)
             % Returns a copy of the instantiated object with an updated
             %   Reynolds number.
-            obj.External_Reynolds = u*obj.fluid_density*obj.length_characteristic ...
-                / obj.dynamic_viscosity;
+            obj.External_Reynolds = u*obj.fluid.fluid_density*obj.sphere.length_characteristic ...
+                / obj.fluid.dynamic_viscosity;
         end
         
         
